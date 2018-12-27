@@ -32,15 +32,15 @@ The basic idea is :
 - **config.json** : Server configuration
 
 # TODO
-- **everything**
-- create basic actions and triggers
+- Move to list by name
+- create complicated actions and triggers
 - prevent external modification of a card (maybe this can be a simple workflow)
 - query trello in batch to reduce api usage
 - create a web workflow creator ?
 
 ## Actions
 
-`void action(card, ...?)`
+`void action(actionOption, tools, card)`
 
 - move card to another list
 - add/remove labels
@@ -50,7 +50,7 @@ The basic idea is :
 
 ## Triggers
 
-`boolean trigger(card, ...?)`
+`boolean trigger(triggerOption, tools, card)`
 
 - checklist complete
 - checklist item complete

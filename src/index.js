@@ -8,6 +8,10 @@ const config = require('../config.json');
 const TrelloAPI = require('./trello-api.js');
 const Trello = new TrelloAPI(config.trello.key, config.trello.token);
 
+const tools = {
+  TrelloAPI: Trello
+};
+
 function loadWorkflows() {
   const WORKFLOW_DIRECTORY = path.join(__dirname, "../workflows");
   const TRIGGERS_DIRECTORY = path.join(__dirname, "triggers");
@@ -54,10 +58,10 @@ function loadWorkflows() {
 
   workflows.forEach(workflow => {
     workflow.triggers.forEach((trigger, index) => {
-      workflow.triggers[index] = (card) => triggers[trigger.name].call(null, trigger, card);
+      workflow.triggers[index] = (card) => triggers[trigger.name].call(null, trigger, tools, card);
     });
     workflow.actions.forEach((action, index) => {
-      workflow.actions[index] = (card) => actions[action.name].call(null, action, card);
+      workflow.actions[index] = (card) => actions[action.name].call(null, action, tools, card);
     });
   });
 
@@ -120,8 +124,6 @@ function createWebhook() {
 async function processEvent(idCard) {
   let res = await Trello.getCardInfos(idCard);
   let card = res.data;
-
-  console.log(card);
 
   workflows.forEach(workflow => {
     let triggerOk = true;

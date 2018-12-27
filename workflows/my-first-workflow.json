@@ -3,13 +3,17 @@
   "triggers": [
     {
       "name": "card-in-list",
-      "param1": 1
+      "list_name": "first col"
     }
   ],
   "actions" : [
     {
       "name": "move-card",
-      "param1": 2 
+      "new_list_id": "5c24e7b7a15deb38e0c5fa6f"
+    },
+    {
+      "name": "add-label",
+      "new_label_id": "5c20b80e91d0c2ddc5c70f0d"
     }
   ]
 }
