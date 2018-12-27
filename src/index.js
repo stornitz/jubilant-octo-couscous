@@ -111,7 +111,7 @@ function startServer() {
 
 function createWebhook() {
   Trello.createWebhook(config.board_to_watch, config.server.url).then(res => {
-    console.log("Webhook created !")
+    console.log("Webhook registered")
   }).catch(err => {
     console.log(`Error while creating the webhook : ${err.data}`);
   })
@@ -119,8 +119,25 @@ function createWebhook() {
 
 async function processEvent(idCard) {
   let res = await Trello.getCardInfos(idCard);
-  console.log(res);
+  let card = res.data;
+
+  console.log(card);
+
+  workflows.forEach(workflow => {
+    let triggerOk = true;
+    let i = 0;
+    
+    while(triggerOk && i < workflow.triggers.length) {
+      triggerOk = workflow.triggers[i].call(null, card);
+      i++;
+    }
+
+    if(triggerOk) {
+      console.log(`Executing actions for workflow "${workflow.name}" for card ${card.shortLink}.`)
+      workflow.actions.forEach(action => action(card));
+    }
+  })
 }
 
 startServer();
-createWebhook()
+createWebhook();
