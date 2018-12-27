@@ -9,11 +9,11 @@
   "actions" : [
     {
       "name": "move-card",
-      "new_list_id": "5c24e7b7a15deb38e0c5fa6f"
+      "new_list_name": "test2"
     },
     {
       "name": "add-label",
-      "new_label_id": "5c20b80e91d0c2ddc5c70f0d"
+      "new_label_color": "yellow"
     },
     {
       "name": "add-checklist",

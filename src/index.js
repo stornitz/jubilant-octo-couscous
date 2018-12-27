@@ -143,5 +143,37 @@ async function processEvent(idCard) {
   })
 }
 
+if(config.populate_lists) {
+  Trello.request('get', `/boards/${config.board_to_watch}/lists`, {
+    cards: 'none',
+    filter: 'open',
+    fields: 'id,name'
+  }).then(res => {
+    constants.__lists = {};
+
+    res.data.forEach(list => {
+      constants.__lists[list.name] = list.id;
+    })
+  }).catch(err => {
+    console.log(`Error fetching board lists : ${err}`);
+  })
+}
+
+if(config.populate_labels) {
+  Trello.request('get', `/boards/${config.board_to_watch}/labels`, {
+    fields: 'id,name,color'
+  }).then(res => {
+    constants.__labels = {};
+    constants.__labelsByColor = {};
+    
+    res.data.forEach(label => {
+      constants.__labels[label.name] = label.id;
+      constants.__labelsByColor[label.color] = label.id;
+    })
+  }).catch(err => {
+    console.log(`Error fetching board lists : ${err}`);
+  })
+}
+
 startServer();
 createWebhook();
