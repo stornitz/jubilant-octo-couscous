@@ -1,7 +1,7 @@
 {
   "checklists": {
     "my-first-checklist" : {
-      "name": "My first checklist",
+      "display_name": "My first checklist",
       "items" : [
         "Option 1", 
         "Option 2",

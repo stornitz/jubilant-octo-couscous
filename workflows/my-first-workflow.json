@@ -16,8 +16,8 @@
       "new_label_color": "yellow"
     },
     {
-      "name": "add-checklist",
-      "checklist_name": "my-first-checklist"
+      "name": "checklist-remove",
+      "by_display_name": "test"
     }
   ]
 }

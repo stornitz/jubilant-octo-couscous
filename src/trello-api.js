@@ -17,7 +17,11 @@ TrelloAPI.prototype.request = function (method, request_url, params = {}) {
     method: method,
     url: this.trello_url + request_url,
     params: params
-  });
+  }).catch(defaultErrorHandler);
+}
+
+function defaultErrorHandler(error) {
+  console.log(error);
 }
 
 TrelloAPI.prototype.getWebhooks = function() {

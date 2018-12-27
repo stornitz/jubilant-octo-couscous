@@ -31,7 +31,12 @@ The basic idea is :
 - **constants/** : define texts, checklist, labels and fields for easy access **(Unclear usage at this point)** _(in JSON)_
 - **config.json** : Server configuration
 
+# User documentation
+
+- [Actions](doc/ACTIONS.md)
+
 # TODO
+
 - Move to list by name
 - create complicated actions and triggers
 - prevent external modification of a card (maybe this can be a simple workflow)
@@ -40,17 +45,14 @@ The basic idea is :
 
 ## Actions
 
-`void action(actionOption, tools, card)`
+`void action(card, actionOption, tools, constants)`
 
-- move card to another list
-- add/remove labels
 - set/unset a field
-- add a checklist
 - update card text
 
 ## Triggers
 
-`boolean trigger(triggerOption, tools, card)`
+`boolean trigger(card, triggerOption, tools, constants)`
 
 - checklist complete
 - checklist item complete
