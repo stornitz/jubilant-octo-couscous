@@ -37,12 +37,12 @@ The basic idea is :
 - [Triggers](doc/TRIGGERS.md)
 - [Actions](doc/ACTIONS.md)
 
-**NOTE :**: An action often created an event which can trigger a webhook. This can create loop in workflows and exceed the API Rate Limit.
+**NOTE** : An action often created an event which can trigger a webhook. This can create loop in workflows and exceed the API Rate Limit.
 To prevent that you have two solutions : create workflows that do not overlap **or** ignore every action from the user (ideally a bot).
 
 ## Developper documentation
 
-### Actions
+### Actions
 
 `void action(card, actionOption, tools, constants)`
 
@@ -57,10 +57,13 @@ To prevent that you have two solutions : create workflows that do not overlap **
 - query trello in batch to reduce api usage
 - create a web workflow creator ?
 
-## Triggers
+## Triggers
 
-- checklist complete
 - checklist item complete
-- card in a list
 - files attached
 - comments
+
+## Actions
+
+- check/uncheck an item
+- dynamics actions
