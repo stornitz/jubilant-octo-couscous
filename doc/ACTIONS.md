@@ -11,6 +11,7 @@ On this page, you can find the default actions provided on this repository.
   * [label-remove](#label-remove)
 - [Others](#others)
   * [move-card](#move-card)
+  * [set-title](#set-title)
 
 # Checklists
 
@@ -87,3 +88,12 @@ Move a card to a specified list (on the same board).
 - **new_list_name** : the name of the list where you want to move the card.
 
 At least one parameter is required.
+
+## set-title
+
+Set the title of the card to a string constant.
+If you want to dynamically set the title, you will have to create your own actions based on [set-title.js](../src/actions/set-title.js).
+
+### Parameters
+
+- **new_title** (required) : the new title.
