@@ -33,11 +33,12 @@ The basic idea is :
 
 # TODO
 - **everything**
-- add and receive Trello webhooks
 - load actions/triggers from their directories
 - create basic actions and triggers
 - plug everything together
 - prevent external modification of a card (maybe this can be a simple workflow)
+- query trello in batch to reduce api usage
+- create a web workflow creator ?
 
 ## Actions
 

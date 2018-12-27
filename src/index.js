@@ -4,6 +4,7 @@ const http = require('http');
 // TODO provide default configuration if not set
 const config = require('../config.json');
 const TrelloAPI = require('./trello-api.js');
+const Trello = new TrelloAPI(config.trello.key, config.trello.token);
 
 function startServer() {
   http.createServer((req, res) => {
@@ -19,8 +20,9 @@ function startServer() {
         try {
           const requestData = JSON.parse(data);
 
-          // TODO do something with the data
-          console.log(requestData);
+          if('action' in requestData && 'card' in requestData.action.data) {
+            processEvent(requestData.action.data.card.id);
+          }
 
           res.statusCode = 200;
           res.end("ok");
@@ -47,13 +49,16 @@ function startServer() {
 }
 
 function createWebhook() {
-  const Trello = new TrelloAPI(config.trello.key, config.trello.token);
-
   Trello.createWebhook(config.board_to_watch, config.server.url).then(res => {
     console.log("Webhook created !")
   }).catch(err => {
     console.log(`Error while creating the webhook : ${err.data}`);
   })
+}
+
+async function processEvent(idCard) {
+  let res = await Trello.getCardInfos(idCard);
+  console.log(res);
 }
 
 startServer();

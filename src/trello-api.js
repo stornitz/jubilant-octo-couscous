@@ -9,15 +9,14 @@ let TrelloAPI = function(key, token) {
   this.trello_url = "https://api.trello.com/1";
 }
 
-TrelloAPI.prototype.request = function (method, request_url, params = {}, data = "") {
+TrelloAPI.prototype.request = function (method, request_url, params = {}) {
   params.key = this.key;
   params.token = this.token;
 
   return axios.request({
     method: method,
     url: this.trello_url + request_url,
-    params: params,
-    data: data
+    params: params
   });
 }
 
@@ -49,6 +48,17 @@ TrelloAPI.prototype.createWebhook = function (idBoard, callbackURL) {
       }
     }).catch(reject);
   })
+}
+
+TrelloAPI.prototype.getCardInfos = function(idCard) {
+  return this.request('get', `/cards/${idCard}`, {
+    fields: "all",
+    list: true,
+    checklists: "all",
+    pluginData: true,
+    attachments: true,
+    customFieldItems: true
+  });
 }
 
 module.exports = TrelloAPI;
