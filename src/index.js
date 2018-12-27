@@ -1,10 +1,71 @@
 const http = require('http');
+const path = require("path");
+const { readdirSync, existsSync } = require("fs");
 
 // TODO check if file exists
 // TODO provide default configuration if not set
 const config = require('../config.json');
 const TrelloAPI = require('./trello-api.js');
 const Trello = new TrelloAPI(config.trello.key, config.trello.token);
+
+function loadWorkflows() {
+  const WORKFLOW_DIRECTORY = path.join(__dirname, "../workflows");
+  const TRIGGERS_DIRECTORY = path.join(__dirname, "triggers");
+  const ACTIONS_DIRECTORY = path.join(__dirname, "actions");
+
+  let workflows = [];
+  let actions = {};
+  let triggers = {};
+
+  readdirSync(WORKFLOW_DIRECTORY).forEach(file => {
+    let workflowPath = path.join(WORKFLOW_DIRECTORY, file);
+    let workflow = require(workflowPath);
+
+    if('actions' in workflow) {
+      workflow.actions.forEach(action => actions[action.name] = null);
+    }
+
+    if('triggers' in workflow) {
+      workflow.triggers.forEach(trigger => triggers[trigger.name] = null);
+    }
+
+    workflows.push(workflow);
+  });
+
+  Object.keys(triggers).forEach(triggerFile => {
+    let triggerFilePath = path.join(TRIGGERS_DIRECTORY, `${triggerFile}.js`);
+
+    if(existsSync(triggerFilePath)) {
+      triggers[triggerFile] = require(triggerFilePath);
+    } else {
+      throw `Cannot find trigger "${triggerFile}".`
+    }
+  });
+
+  Object.keys(actions).forEach(actionFile => {
+    let actionFilePath = path.join(ACTIONS_DIRECTORY, `${actionFile}.js`);
+    
+    if(existsSync(actionFilePath)) {
+      actions[actionFile] = require(actionFilePath);
+    } else {
+      throw `Cannot find action "${actionFile}".`;
+    }
+  });
+
+  workflows.forEach(workflow => {
+    workflow.triggers.forEach((trigger, index) => {
+      workflow.triggers[index] = (card) => triggers[trigger.name].call(null, trigger, card);
+    });
+    workflow.actions.forEach((action, index) => {
+      workflow.actions[index] = (card) => actions[action.name].call(null, action, card);
+    });
+  });
+
+  return workflows;
+}
+
+const workflows = loadWorkflows();
+console.log(`${workflows.length} workflows loaded.`);
 
 function startServer() {
   http.createServer((req, res) => {

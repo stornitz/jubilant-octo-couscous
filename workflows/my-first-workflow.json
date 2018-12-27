@@ -1,0 +1,15 @@
+{
+  "name": "My first workflow",
+  "triggers": [
+    {
+      "name": "card-in-list",
+      "param1": 1
+    }
+  ],
+  "actions" : [
+    {
+      "name": "move-card",
+      "param1": 2 
+    }
+  ]
+}
