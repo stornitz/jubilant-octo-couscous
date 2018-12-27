@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/stornitz/jubilant-octo-couscous/issues"
   },
-  "homepage": "https://github.com/stornitz/jubilant-octo-couscous#readme"
+  "homepage": "https://github.com/stornitz/jubilant-octo-couscous#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }

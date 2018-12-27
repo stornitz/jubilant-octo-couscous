@@ -1,5 +1,11 @@
 {
   "server": {
+    "url": "http://YOUR_SERVER_IP_OR_HOSTNAME:8080",
     "port": "8080"
-  }
+  },
+  "trello": {
+    "key" : "YOUR_APP_KEY_HERE",
+    "token" : "YOUR_AUTH_TOKEN_HERE"
+  },
+  "board_to_watch" : "nC8QJJoZ"
 }

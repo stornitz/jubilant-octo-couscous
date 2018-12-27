@@ -1,0 +1,5 @@
+- `npm install`
+- `cp config{.sample,}.json`
+- edit `config.json` with your configuration
+  - get board id : https://www.reddit.com/r/trello/comments/4axfcd/where_is_my_trello_board_id/d14ok3k
+- `npm start`

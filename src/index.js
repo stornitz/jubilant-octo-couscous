@@ -46,4 +46,15 @@ function startServer() {
   });
 }
 
+function createWebhook() {
+  const Trello = new TrelloAPI(config.trello.key, config.trello.token);
+
+  Trello.createWebhook(config.board_to_watch, config.server.url).then(res => {
+    console.log("Webhook created !")
+  }).catch(err => {
+    console.log(`Error while creating the webhook : ${err.data}`);
+  })
+}
+
 startServer();
+createWebhook()
