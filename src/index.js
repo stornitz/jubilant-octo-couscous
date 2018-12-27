@@ -83,12 +83,16 @@ function startServer() {
         data += chunk;
       });
 
+      let ignoreUsername = ('ignore_username' in config) ? config.ignore_username : null;
+
       req.on('end', () => {
         try {
           const requestData = JSON.parse(data);
 
           if('action' in requestData && 'card' in requestData.action.data) {
-            processEvent(requestData.action.data.card.id);
+            if(ignoreUsername != requestData.action.memberCreator.username) {
+              processEvent(requestData.action.data.card.id);
+            }
           }
 
           res.statusCode = 200;
@@ -123,6 +127,12 @@ function createWebhook() {
 
 async function processEvent(idCard) {
   let res = await Trello.getCardInfos(idCard);
+
+  if(res == null) {// ignore card
+    console.log("Ignored empty card data.");
+    return;
+  }
+
   let card = res.data;
 
   workflows.forEach(workflow => {

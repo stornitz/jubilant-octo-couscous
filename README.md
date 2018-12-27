@@ -33,26 +33,31 @@ The basic idea is :
 
 # User documentation
 
+- [Config file](doc/CONFIG.md)
+- [Triggers](doc/TRIGGERS.md)
 - [Actions](doc/ACTIONS.md)
+
+**NOTE :**: An action often created an event which can trigger a webhook. This can create loop in workflows and exceed the API Rate Limit.
+To prevent that you have two solutions : create workflows that do not overlap **or** ignore every action from the user (ideally a bot).
+
+## Developper documentation
+
+### Actions
+
+`void action(card, actionOption, tools, constants)`
+
+### Triggers
+
+`boolean trigger(card, triggerOption, tools, constants)`
 
 # TODO
 
-- Move to list by name
-- create complicated actions and triggers
+- check params before calling an action/trigger
 - prevent external modification of a card (maybe this can be a simple workflow)
 - query trello in batch to reduce api usage
 - create a web workflow creator ?
 
-## Actions
-
-`void action(card, actionOption, tools, constants)`
-
-- set/unset a field
-- update card text
-
-## Triggers
-
-`boolean trigger(card, triggerOption, tools, constants)`
+## Triggers
 
 - checklist complete
 - checklist item complete

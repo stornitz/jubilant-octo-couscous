@@ -10,5 +10,6 @@
   "board_to_watch" : "4d5ea62fd76aa1136000000c",
   "populate_lists" : true,
   "populate_labels" : true,
-  "populate_custom_fields" : true
+  "populate_custom_fields" : true,
+  "ignore_username": "YOUR_BOT_USERNAME"
 }
