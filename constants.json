@@ -1,0 +1,12 @@
+{
+  "checklists": {
+    "my-first-checklist" : {
+      "name": "My first checklist",
+      "items" : [
+        "Option 1", 
+        "Option 2",
+        "Option 3"
+      ]
+    }
+  }
+}

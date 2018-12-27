@@ -5,6 +5,8 @@ const { readdirSync, existsSync } = require("fs");
 // TODO check if file exists
 // TODO provide default configuration if not set
 const config = require('../config.json');
+const constants = require('../constants.json');
+
 const TrelloAPI = require('./trello-api.js');
 const Trello = new TrelloAPI(config.trello.key, config.trello.token);
 
@@ -58,10 +60,10 @@ function loadWorkflows() {
 
   workflows.forEach(workflow => {
     workflow.triggers.forEach((trigger, index) => {
-      workflow.triggers[index] = (card) => triggers[trigger.name].call(null, trigger, tools, card);
+      workflow.triggers[index] = (card) => triggers[trigger.name].call(null, card, trigger, tools, constants);
     });
     workflow.actions.forEach((action, index) => {
-      workflow.actions[index] = (card) => actions[action.name].call(null, action, tools, card);
+      workflow.actions[index] = (card) => actions[action.name].call(null, card, action, tools, constants);
     });
   });
 

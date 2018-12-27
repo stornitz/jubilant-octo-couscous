@@ -14,6 +14,10 @@
     {
       "name": "add-label",
       "new_label_id": "5c20b80e91d0c2ddc5c70f0d"
+    },
+    {
+      "name": "add-checklist",
+      "checklist_name": "my-first-checklist"
     }
   ]
 }
