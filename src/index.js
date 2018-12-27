@@ -169,5 +169,24 @@ if(config.populate_labels) {
   })
 }
 
+if(config.populate_custom_fields) {
+  Trello.request('get', `/boards/${config.board_to_watch}/customFields`).then(res => {
+    constants.__customFields = {};
+    constants.__customFieldsItems = {};
+
+    res.data.forEach(field => {
+      constants.__customFields[field.name] = field.id;
+
+      if('options' in field) {
+        constants.__customFieldsItems[field.id] = {};
+
+        field.options.forEach(option => {
+          constants.__customFieldsItems[field.id][option.value.text] = option.id;
+        });
+      }
+    });
+  });
+}
+
 startServer();
 createWebhook();

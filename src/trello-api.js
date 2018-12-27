@@ -9,14 +9,15 @@ let TrelloAPI = function(key, token) {
   this.trello_url = "https://api.trello.com/1";
 }
 
-TrelloAPI.prototype.request = function (method, request_url, params = {}) {
+TrelloAPI.prototype.request = function (method, request_url, params = {}, data = undefined) {
   params.key = this.key;
   params.token = this.token;
 
   return axios.request({
     method: method,
     url: this.trello_url + request_url,
-    params: params
+    params: params,
+    data: data
   }).catch(defaultErrorHandler);
 }
 

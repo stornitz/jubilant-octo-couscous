@@ -9,6 +9,8 @@ On this page, you can find the default actions provided on this repository.
 - [Labels](#labels)
   * [label-add](#label-add)
   * [label-remove](#label-remove)
+- [Custom Fields](#custom-fields)
+  * [set-custom-field](#set-custom-field)
 - [Others](#others)
   * [move-card](#move-card)
   * [set-title](#set-title)
@@ -59,10 +61,11 @@ Add an existing label to a card.
 ### Parameters
 
 - **new_label_id** : the trello id of the label you want to add.
-- **new_label_name** : the name of the label you want to add.
-- **new_label_color** : the color of the label you want to add (only work if you have one label per color at maximum).
+- **new_label_name** * : the name of the label you want to add.
+- **new_label_color** *: the color of the label you want to add (only work if you have one label per color at maximum).
 
 At least one parameter is required.
+\* : to use these parameters, you need to enable `populate_labels` in the config file.
 
 ## label-remove
 
@@ -75,6 +78,24 @@ Remove an existing label from a card.
 - **label_color** : the color of the label you want to remove (only work if you have one label per color at maximum).
 
 At least one parameter is required.
+\* : to use these parameters, you need to enable `populate_labels` in the config file.
+
+# Custom Fields
+
+## set-custom-field
+
+Define a custom field to the value of your choice.
+
+### Parameters
+
+- **custom_field_id** : the trello id of the custom field.
+- **custom_field_name** * : the name of the custom field.
+- **custom_field_type** : the type of the custom field. This can be one of: _text, number, date, checked, list_item_id, list_item_text_ *. 
+- **custom_field_new_value** : the new value of the custom field. To clear the value of the field, set this parameter to `null` .
+
+\* : to use these parameters and settings, you need to enable `populate_custom_fields` in the config file.
+
+_type_ and _new_value_ are both required. You also need one of _id_ or _name_.
 
 # Others
 
@@ -84,10 +105,11 @@ Move a card to a specified list (on the same board).
 
 ### Parameters
 
-- **new_list_id** : the trello id of the list where you want to move the card.
-- **new_list_name** : the name of the list where you want to move the card.
+- **new_list_id** * : the trello id of the list where you want to move the card.
+- **new_list_name** * : the name of the list where you want to move the card.
 
 At least one parameter is required.
+\* : to use this parameter, you need to enable `populate_lists` in the config file.
 
 ## set-title
 
