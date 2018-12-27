@@ -22,7 +22,12 @@ TrelloAPI.prototype.request = function (method, request_url, params = {}, data =
 }
 
 function defaultErrorHandler(error) {
-  console.log(error);
+  console.log('== REQUEST ERROR ==')
+  console.log(error.response.statusText, error.response.status);
+  console.log("URL: ", error.config.url);
+  console.log("Params: ", error.config.params);
+  console.log("Req Data: ", error.config.data);
+  console.log("Res Data: ", error.response.data);
 }
 
 TrelloAPI.prototype.getWebhooks = function() {
