@@ -118,8 +118,6 @@ function startServer() {
 function createWebhook() {
   Trello.createWebhook(config.board_to_watch, config.server.url).then(res => {
     console.log("Webhook registered")
-  }).catch(err => {
-    console.log(`Error while creating the webhook : ${err.data}`);
   })
 }
 
@@ -154,8 +152,6 @@ if(config.populate_lists) {
     res.data.forEach(list => {
       constants.__lists[list.name] = list.id;
     })
-  }).catch(err => {
-    console.log(`Error fetching board lists : ${err}`);
   })
 }
 
@@ -170,8 +166,6 @@ if(config.populate_labels) {
       constants.__labels[label.name] = label.id;
       constants.__labelsByColor[label.color] = label.id;
     })
-  }).catch(err => {
-    console.log(`Error fetching board lists : ${err}`);
   })
 }
 

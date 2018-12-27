@@ -8,7 +8,7 @@ module.exports = (card, params, tools, constants) => {
   // Create the checklist on the card
   tools.TrelloAPI.request('post', `/cards/${card.id}/checklists`, {
     name: checklist.display_name
-  }).catch(onError)
+  })
   .then((res) => {
     let checklistId = res.data.id;
 
@@ -19,7 +19,3 @@ module.exports = (card, params, tools, constants) => {
     });
   })
 };
-
-function onError(err) {
-  console.log(`Error creating checklist on card ${card.shortLink} : ${err.data}`);
-}

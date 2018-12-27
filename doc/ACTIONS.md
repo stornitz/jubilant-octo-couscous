@@ -5,21 +5,16 @@ On this page, you can find the default actions provided on this repository.
 - [Actions](#actions)
 - [Checklists](#checklists)
   * [checklist-add](#checklist-add)
-    + [Parameters](#parameters)
   * [checklist-remove](#checklist-remove)
-    + [Parameters](#parameters-1)
 - [Labels](#labels)
   * [label-add](#label-add)
-    + [Parameters](#parameters-2)
   * [label-remove](#label-remove)
-    + [Parameters](#parameters-3)
 - [Others](#others)
   * [move-card](#move-card)
-    + [Parameters](#parameters-4)
 
- # Checklists
+# Checklists
 
- ## checklist-add
+## checklist-add
 
 Add a checklist to the card from the `constants.json` file.
 
@@ -43,11 +38,11 @@ Add a checklist to the card from the `constants.json` file.
 ...
 ```
 
-## checklist-remove
+## checklist-remove
 
 Remove every checklist matching a display name (the one you see on Trello) from a card.
 
-### Parameters
+### Parameters
 
 - **by_name** : refers to the checklist key in `constants.json`.
 - **by_display_name** : refers to the checklist name in Trello.
@@ -60,7 +55,7 @@ At least one parameter is required.
 
 Add an existing label to a card.
 
-### Parameters
+### Parameters
 
 - **new_label_id** : the trello id of the label you want to add.
 - **new_label_name** : the name of the label you want to add.
@@ -72,7 +67,7 @@ At least one parameter is required.
 
 Remove an existing label from a card.
 
-### Parameters
+### Parameters
 
 - **label_id** : the trello id of the label you want to remove.
 - **label_name** : the name of the label you want to remove.
@@ -86,7 +81,7 @@ At least one parameter is required.
 
 Move a card to a specified list (on the same board).
 
-### Parameters
+### Parameters
 
 - **new_list_id** : the trello id of the list where you want to move the card.
 - **new_list_name** : the name of the list where you want to move the card.
