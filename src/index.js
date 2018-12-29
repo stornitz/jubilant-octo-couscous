@@ -125,15 +125,12 @@ function createWebhook() {
   })
 }
 
-async function processEvent(idCard) {
-  let res = await Trello.safe(Trello.getCardInfos(idCard));
-
-  if(res == null) {// ignore card
+function processEvent(idCard) {
+  Trello.safe(Trello.getCardInfos(idCard)).then(res => {
+    runWorkflows(res.data);  
+  }).catch(err => {
     console.log("Ignored empty card data.");
-    return;
-  }
-
-  runWorkflows(res.data);  
+  });
 }
 
 function runWorkflows(card) {
@@ -154,10 +151,11 @@ function runWorkflows(card) {
 }
 
 // Call the runWorkflows function for every card on the board
-async function processExistingCards() {
-  let groupRes = await Trello.safe(Trello.getCardsOnBoard(config.board_to_watch));
-  groupRes.data.forEach(res => {
-    runWorkflows(res["200"]);
+function processExistingCards() {
+  Trello.safe(Trello.getCardsOnBoard(config.board_to_watch)).then(groupRes => {
+    groupRes.data.forEach(res => {
+      runWorkflows(res["200"]);
+    });
   });
 }
 
@@ -207,7 +205,6 @@ if(config.populate_custom_fields) {
     });
   }));
 }
-
 
 startServer();
 createWebhook();
