@@ -1,4 +1,5 @@
 const axios = require('axios');
+const TrelloAPIBatch = require('./trello-api-batch.js');
 // TODO check if file exists
 // TODO provide default configuration if not set
 const config = require('../config.json');
@@ -18,20 +19,32 @@ TrelloAPI.prototype.request = function (method, request_url, params = {}, data =
     url: this.trello_url + request_url,
     params: params,
     data: data
-  }).catch(defaultErrorHandler);
+  });
 }
 
-function defaultErrorHandler(error) {
-  console.log('== REQUEST ERROR ==')
-  console.log(error.response.statusText, error.response.status);
-  console.log("URL: ", error.config.url);
-  console.log("Params: ", error.config.params);
-  console.log("Req Data: ", error.config.data);
-  console.log("Res Data: ", error.response.data);
+TrelloAPI.prototype.get = function(request_url, params = {}) {
+  return this.request('get', request_url, params);
+}
+
+TrelloAPI.prototype.startBatch = function() {
+  return new TrelloAPIBatch(this, axios);
+}
+
+TrelloAPI.prototype.safe = (promise) => {
+  return new Promise((resolve, reject) => {
+    promise.then(resolve, (error) => {
+      console.log('== REQUEST ERROR ==')
+      console.log(error.response.statusText, error.response.status);
+      console.log("URL: ", error.config.url);
+      console.log("Params: ", error.config.params);
+      console.log("Req Data: ", error.config.data);
+      console.log("Res Data: ", error.response.data);
+    });
+  });  
 }
 
 TrelloAPI.prototype.getWebhooks = function() {
-  return this.request('get', `/tokens/${this.token}/webhooks`);
+  return this.get(`/tokens/${this.token}/webhooks`);
 }
 
 TrelloAPI.prototype.createWebhook = function (idBoard, callbackURL) {
@@ -54,20 +67,48 @@ TrelloAPI.prototype.createWebhook = function (idBoard, callbackURL) {
         this.request("post", "/webhooks", {
           idModel: idBoard,
           callbackURL: callbackURL
-        }).then(resolve).catch(reject);
+        }).then(resolve, reject);
       }
-    }).catch(reject);
+    }, reject);
   })
 }
 
 TrelloAPI.prototype.getCardInfos = function(idCard) {
-  return this.request('get', `/cards/${idCard}`, {
+  return this.get(`/cards/${idCard}`, {
     fields: "all",
     list: true,
     checklists: "all",
     pluginData: true,
     attachments: true,
     customFieldItems: true
+  });
+}
+
+TrelloAPI.prototype.getCardInfos = function(idCard) {
+  return this.get(`/cards/${idCard}`, {
+    fields: "all",
+    list: true,
+    checklists: "all",
+    pluginData: true,
+    attachments: true,
+    customFieldItems: true
+  });
+}
+
+TrelloAPI.prototype.getCardsOnBoard = function(idBoard) {
+  return new Promise((resolve, reject) => {
+    this.get(`/boards/${idBoard}/cards`, {
+      fields: "none",
+    }).then(res => {
+      let batch = this.startBatch();
+      let getCardInfos = this.getCardInfos.bind(batch);
+
+      res.data.forEach(card => {
+        getCardInfos(card.id);
+      });
+
+      batch.sendBatch().then(resolve, reject);
+    });
   });
 }
 

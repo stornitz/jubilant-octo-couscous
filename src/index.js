@@ -126,15 +126,17 @@ function createWebhook() {
 }
 
 async function processEvent(idCard) {
-  let res = await Trello.getCardInfos(idCard);
+  let res = await Trello.safe(Trello.getCardInfos(idCard));
 
   if(res == null) {// ignore card
     console.log("Ignored empty card data.");
     return;
   }
 
-  let card = res.data;
+  runWorkflows(res.data);  
+}
 
+function runWorkflows(card) {
   workflows.forEach(workflow => {
     let triggerOk = true;
     let i = 0;
@@ -148,42 +150,50 @@ async function processEvent(idCard) {
       console.log(`Executing actions for workflow "${workflow.name}" for card ${card.shortLink}.`)
       workflow.actions.forEach(action => action(card));
     }
-  })
+  });
+}
+
+// Call the runWorkflows function for every card on the board
+async function processExistingCards() {
+  let groupRes = await Trello.safe(Trello.getCardsOnBoard(config.board_to_watch));
+  groupRes.data.forEach(res => {
+    runWorkflows(res["200"]);
+  });
 }
 
 if(config.populate_lists) {
-  Trello.request('get', `/boards/${config.board_to_watch}/lists`, {
+  constants.__lists = {};
+
+  Trello.safe(Trello.get(`/boards/${config.board_to_watch}/lists`, {
     cards: 'none',
     filter: 'open',
     fields: 'id,name'
   }).then(res => {
-    constants.__lists = {};
-
     res.data.forEach(list => {
       constants.__lists[list.name] = list.id;
     })
-  })
+  }));
 }
 
 if(config.populate_labels) {
-  Trello.request('get', `/boards/${config.board_to_watch}/labels`, {
+  constants.__labels = {};
+  constants.__labelsByColor = {};
+
+  Trello.safe(Trello.get(`/boards/${config.board_to_watch}/labels`, {
     fields: 'id,name,color'
-  }).then(res => {
-    constants.__labels = {};
-    constants.__labelsByColor = {};
-    
+  }).then(res => {    
     res.data.forEach(label => {
       constants.__labels[label.name] = label.id;
       constants.__labelsByColor[label.color] = label.id;
     })
-  })
+  }));
 }
 
 if(config.populate_custom_fields) {
-  Trello.request('get', `/boards/${config.board_to_watch}/customFields`).then(res => {
-    constants.__customFields = {};
-    constants.__customFieldsItems = {};
+  constants.__customFields = {};
+  constants.__customFieldsItems = {};
 
+  Trello.safe(Trello.get(`/boards/${config.board_to_watch}/customFields`).then(res => {
     res.data.forEach(field => {
       constants.__customFields[field.name] = field.id;
 
@@ -195,8 +205,10 @@ if(config.populate_custom_fields) {
         });
       }
     });
-  });
+  }));
 }
+
 
 startServer();
 createWebhook();
+processExistingCards();
