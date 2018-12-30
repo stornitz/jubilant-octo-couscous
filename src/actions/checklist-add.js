@@ -9,13 +9,14 @@ module.exports = (card, params, tools, constants) => {
   tools.TrelloAPI.request('post', `/cards/${card.id}/checklists`, {
     name: checklist.display_name
   })
-  .then((res) => {
+  .then(async (res) => {
     let checklistId = res.data.id;
 
-    checklist.items.forEach(item => {
-      tools.TrelloAPI.request('post', `/checklists/${checklistId}/checkItems`, {
-        name: item
+    for(let item of checklist.items) {
+      await tools.TrelloAPI.request('post', `/checklists/${checklistId}/checkItems`, {
+        name: item,
+        pos: "bottom"
       })
-    });
+    }
   })
 };
