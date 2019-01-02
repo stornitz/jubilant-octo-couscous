@@ -59,9 +59,7 @@ To prevent that you have two solutions : create workflows that do not overlap **
 
 ## Triggers
 
-- checklist item complete
 - files attached
-- comments
 
 ## Actions
 

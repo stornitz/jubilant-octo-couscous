@@ -157,7 +157,6 @@ function runWorkflows(card) {
 }
 
 function registerDueDateJob(card) {
-  console.log("register", card.shortLink);
   // if there is no due date and a job is set : delete
   if(card.due == null && card.id in dueDateJobs) {
     let job = dueDateJobs[card.id].job;
