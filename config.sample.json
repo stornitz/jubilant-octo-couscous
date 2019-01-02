@@ -11,5 +11,6 @@
   "populate_lists" : true,
   "populate_labels" : true,
   "populate_custom_fields" : true,
-  "ignore_username": "YOUR_BOT_USERNAME"
+  "ignore_username": "YOUR_BOT_USERNAME",
+  "due_date_job": true
 }

@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require("path");
 const { readdirSync, existsSync } = require("fs");
+const { scheduleJob } = require("node-schedule");
 
 // TODO check if file exists
 // TODO provide default configuration if not set
@@ -13,6 +14,7 @@ const Trello = new TrelloAPI(config.trello.key, config.trello.token);
 const tools = {
   TrelloAPI: Trello
 };
+const dueDateJobs = {};
 
 function loadWorkflows() {
   const WORKFLOW_DIRECTORY = path.join(__dirname, "../workflows");
@@ -129,11 +131,15 @@ function processEvent(idCard) {
   Trello.safe(Trello.getCardInfos(idCard)).then(res => {
     runWorkflows(res.data);  
   }).catch(err => {
-    console.log("Ignored empty card data.");
+    console.log("Ignored empty card data.", err);
   });
 }
 
 function runWorkflows(card) {
+  if(config.due_date_job) {
+    registerDueDateJob(card);
+  }
+
   workflows.forEach(workflow => {
     let triggerOk = true;
     let i = 0;
@@ -148,6 +154,38 @@ function runWorkflows(card) {
       workflow.actions.forEach(action => action(card));
     }
   });
+}
+
+function registerDueDateJob(card) {
+  console.log("register", card.shortLink);
+  // if there is no due date and a job is set : delete
+  if(card.due == null && card.id in dueDateJobs) {
+    let job = dueDateJobs[card.id].job;
+    if(job != null) {
+      job.cancel();
+    }
+    delete dueDateJobs[card.id];
+  } else {
+    // if a job is set, and the card due is different: update = delete + create
+    // card.due always != null because otherwise would have trigger the upper if statement
+    if(card.id in dueDateJobs && card.due != dueDateJobs[card.id].date) {
+        let job = dueDateJobs[card.id].job;
+        if(job != null) {
+          job.cancel();
+        }
+    }
+
+    // if there is a due date: create
+    if(card.due != null) {
+      let job = scheduleJob(new Date(card.due), processEvent.bind(null, card.id));
+      //job.on('run', () => delete dueDateJobs[card.id]);
+
+      dueDateJobs[card.id] = {
+        date: card.due,
+        job: job
+      };
+    }
+  }
 }
 
 // Call the runWorkflows function for every card on the board
