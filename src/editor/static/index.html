@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Workflows Editor</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <div id="templates">
+    <div id="workflow" class="workflow">
+      <h3 class="twelve columns"><span id="workflow-name">{workflowName}</span> <button onclick="renameWorkflow(this)">rename</button><button onclick="">duplicate</button><button onclick="deleteWorkflow(this)">delete</button></h3>
+      <div class="row">
+        <div class="triggers six columns">
+          <h4>Triggers</h4>
+          <label>Add a trigger</label>
+          <select id="select-triggers"></select>
+          <button>add</button>
+          <p class="empty">No triggers, yet.</p>
+        </div>
+        <div class="actions six columns row">
+          <h4>Actions</h4>
+          <label>Add an action</label>
+          <select id="select-actions"></select>
+          <button>add</button>
+          <p class="empty">No actions, yet.</p>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div class="container">
+    <h1>Workflows Editor</h1>
+    <p>With this tool you can create, edit or delete your workflows easily.</p>
+    <h2>Your workflows</h2>
+    <div id="workflows">
+      <hr>
+      <div class="workflow">
+        <h3 data-workflow-id="toto" class="twelve columns">Toto <button onclick="renameWorkflow(this)">rename</button><button onclick="">duplicate</button><button onclick="deleteWorkflow(this)">delete</button></h3>
+        <div class="row">
+          <div class="triggers six columns">
+            <h4>Triggers</h4>
+            <label>Add an action</label>
+            <select></select> <button>add</button>
+            <h5>trigger <button href="#">up</button><button href="#">down</button><button href="#">delete</button></h5>
+            <label for="input">Lorem ipsum </label>
+            <input class="u-full-width" type="text" placeholder="lorem" id="input">
+            <label for="input">Lorem ipsum</label>
+            <input class="u-full-width" type="text" placeholder="lorem" id="input">
+            <label for="input">Lorem ipsum</label>
+            <input class="u-full-width" type="text" placeholder="lorem" id="input">
+            <label for="input">Lorem ipsum</label>
+            <input class="u-full-width" type="text" placeholder="lorem" id="input">
+            
+          </div>
+          <div class="actions six columns row">
+            <h4>Actions</h4>
+            <label>Add an action</label>
+            <select></select> <button>add</button>
+            <p>No actions, yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Create a new workflow</h3>
+    <button>Create a new workflow</button>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>

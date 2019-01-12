@@ -1,0 +1,62 @@
+.workflow > h3::before  {
+  content: '- ';
+}
+
+body {
+  padding-top: 10%;
+}
+
+.workflow .row {
+  padding-left: 30px;
+  margin-bottom: 2em;
+}
+
+h4 {
+  border-bottom: 1px solid;
+}
+
+h5 {
+  display: list-item;
+  list-style-position: inside;
+}
+
+h3 > span {
+  vertical-align: middle;
+}
+h4 > small {
+  font-size: 0.6em;
+  vertical-align: middle;
+}
+
+h3 button, h5 button {
+  height: 25px;
+  line-height: 25px;
+  padding: 0 10px;
+  margin: 0 2px;
+  vertical-align: middle;
+}
+
+.triggers {
+  color: #2980b9;
+}
+
+.actions {
+  color: #e74c3c;
+}
+
+.add {
+  display: block;
+  font-style: italic;
+}
+
+.empty {
+  display: none;
+}
+
+.triggers .empty:last-child, .actions .empty:last-child {
+  display: block;
+}
+
+#templates {
+  display: none;
+}
