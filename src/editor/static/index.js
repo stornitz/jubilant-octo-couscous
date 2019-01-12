@@ -1,7 +1,11 @@
 const workflowsNode = document.getElementById('workflows');
 const selectTriggersNode = document.getElementById('select-triggers');
 const selectActionsNode = document.getElementById('select-actions');
+
 const workflowTemplate = document.querySelector('#templates #workflow');
+const triggerTemplate = document.querySelector('#templates #trigger');
+const actionTemplate = document.querySelector('#templates #action');
+const fieldTemplate = document.querySelector('#templates #field');
 
 let workflows = {};
 let triggers = {};
@@ -38,14 +42,6 @@ function deleteWorkflow(element) {
   });
 }
 
-function createWorkflowNode(workflowId, workflow) {
-  let copy = workflowTemplate.cloneNode(true);
-  copy.setAttribute('id', workflowId);
-
-  workflowsNode.appendChild(copy);
-  document.querySelector(`#${workflowId} #workflow-name`).innerHTML = workflow.name;
-}
-
 function createTriggerOption(name) {
   var option = document.createElement('option');
   option.value = name;
@@ -58,6 +54,32 @@ function createActionOption(name) {
   option.value = name;
   option.innerHTML = name;
   selectActionsNode.appendChild(option);
+}
+
+function createWorkflowObjects(workflowId, workflowObjects, prefix, template) {
+  let parentNode = document.querySelector(`#${workflowId} .${prefix}`);
+
+  workflowObjects.forEach((object, key) => {
+    let objectCopy = template.cloneNode(true);
+    let objectId = `obj-${key}`;
+    objectCopy.setAttribute('id', objectId);
+    parentNode.appendChild(objectCopy);
+
+    document.querySelector(`#${workflowId} .${prefix} #${objectId} .title`).innerHTML = object.name;
+
+    // TODO add fields
+  });
+}
+
+function createWorkflowNode(workflowId, workflow) {
+  let copy = workflowTemplate.cloneNode(true);
+  copy.setAttribute('id', workflowId);
+
+  workflowsNode.appendChild(copy);
+  document.querySelector(`#${workflowId} #workflow-name`).innerHTML = workflow.name;
+
+  createWorkflowObjects(workflowId, workflow.triggers, 'triggers', triggerTemplate);
+  createWorkflowObjects(workflowId, workflow.actions, 'actions', actionTemplate);
 }
 
 function loadInitialData() {
