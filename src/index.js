@@ -122,9 +122,17 @@ function startServer() {
 }
 
 function createWebhook() {
-  Trello.createWebhook(config.board_to_watch, config.server.url).then(res => {
-    console.log("Webhook registered")
-  })
+  Trello.createWebhookIfNotExist(config.board_to_watch, config.server.url).then(alreadyExists => {
+    if(alreadyExists) {
+      console.log("Using existing webhook.");
+    } else {
+      console.log("Webhook registered.");
+    }
+  }, res => {
+    console.log("Error while creating webhook HTTP", res.response.status);
+    console.log(res.response.data.message);
+    exit();
+  });
 }
 
 function processEvent(idCard) {

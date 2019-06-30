@@ -73,6 +73,10 @@ TrelloAPI.prototype.createWebhook = function (idBoard, callbackURL) {
   })
 }
 
+TrelloAPI.prototype.deleteWebhook = function (idBoard, idWebhook) {
+  return this.request("delete", `/webhooks/${idWebhook}`);
+}
+
 TrelloAPI.prototype.getCardInfos = function(idCard) {
   return this.get(`/cards/${idCard}`, {
     fields: "all",
