@@ -2,7 +2,6 @@
 
 On this page, you can find the default actions provided on this repository.
 
-- [Actions](#actions)
 - [Checklists](#checklists)
   * [checklist-add](#checklist-add)
   * [checklist-remove](#checklist-remove)
@@ -14,6 +13,8 @@ On this page, you can find the default actions provided on this repository.
 - [Others](#others)
   * [move-card](#move-card)
   * [set-title](#set-title)
+  * [due](#due)
+  * [comment](#comment)
 
 # Checklists
 
@@ -62,7 +63,7 @@ Add an existing label to a card.
 
 - **new_label_id** : the trello id of the label you want to add.
 - **new_label_name** * : the name of the label you want to add.
-- **new_label_color** *: the color of the label you want to add (only work if you have one label per color at maximum).
+- **new_label_color** * : the color of the label you want to add (only work if you have one label per color at maximum).
 
 At least one parameter is required.
 \* : to use these parameters, you need to enable `populate_labels` in the config file.
@@ -119,3 +120,22 @@ If you want to dynamically set the title, you will have to create your own actio
 ### Parameters
 
 - **new_title** (required) : the new title.
+
+## due
+
+Set, move or remove the due date
+
+### Parameters
+
+- **set**  : the new value, or `null` to remove the due date.
+- **move** : the offset in ms from the current due date. (can be a positive or negative value)
+
+At least one parameter is required.
+
+## comment
+
+Create a comment
+
+### Parameters
+
+- **comment**  (required) : the text of the comment

@@ -28,7 +28,7 @@ The basic idea is :
   - **actions/** : default actions _(in JS)_
   - **index.js** : Server entry point : where the magic happens
 - **workflows/** : sample workflows _(in JSON)_
-- **constants/** : define texts, checklist, labels and fields for easy access **(Unclear usage at this point)** _(in JSON)_
+- **constants.json** : define texts, checklist, labels and fields for easy access _(in JSON)_
 - **config.json** : Server configuration
 
 # User documentation
@@ -37,7 +37,7 @@ The basic idea is :
 - [Triggers](doc/TRIGGERS.md)
 - [Actions](doc/ACTIONS.md)
 
-**NOTE** : An action often created an event which can trigger a webhook. This can create loop in workflows and exceed the API Rate Limit.
+**NOTE** : An action often create an event which can trigger a webhook. This can create loop in workflows and exceed the API Rate Limit.
 To prevent that you have two solutions : create workflows that do not overlap **or** ignore every action from the user (ideally a bot).
 
 ## Developper documentation
