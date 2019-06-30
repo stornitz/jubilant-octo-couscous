@@ -1,4 +1,10 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Add a checklist"
+
+exports.params = {
+  checklist_name: "Name of the checklist"
+}
+
+exports.fct = (card, params, tools, constants) => {
   if(!(params.checklist_name in constants.checklists)) {
     throw `Checklist not found ${params.checklist_name}`;
   }

@@ -13,6 +13,7 @@ let actions = {};
 
 function request(method, url, data=null, callback) {
   var xmlhttp = new XMLHttpRequest();
+  xmlhttp.overrideMimeType("application/json");
 
   xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {

@@ -1,4 +1,14 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Custom Field"
+
+exports.params = {
+  custom_field_id: 'The id of the custom field',
+  custom_field_name: 'The name of the custom field',
+  check_if_set: 'Set to true',
+  custom_field_type: 'The type of the custom field',
+  custom_field_value: 'The value of the custom field'
+}
+
+exports.fct = (card, params, tools, constants) => {
   if('custom_field_name' in params) {
     params.custom_field_id = constants.__customFields[params.custom_field_name];
   }

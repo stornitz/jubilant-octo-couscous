@@ -1,4 +1,15 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Number of members"
+
+exports.params = {
+  eq: 'Egal to',
+  ne: 'Not egal to',
+  gt: 'Greater than',
+  gte: 'Greater than or egal to',
+  lt: 'Lower than',
+  lte: 'Liwer than or egal to'
+}
+
+exports.fct = (card, params, tools, constants) => {
   let nbMembers = card.idMembers.length;
 
   if('eq' in params) {

@@ -44,7 +44,7 @@ function loadWorkflows() {
     let triggerFilePath = path.join(TRIGGERS_DIRECTORY, `${triggerFile}.js`);
 
     if(existsSync(triggerFilePath)) {
-      triggers[triggerFile] = require(triggerFilePath);
+      triggers[triggerFile] = require(triggerFilePath).fct;
     } else {
       throw `Cannot find trigger "${triggerFile}".`
     }
@@ -54,7 +54,7 @@ function loadWorkflows() {
     let actionFilePath = path.join(ACTIONS_DIRECTORY, `${actionFile}.js`);
     
     if(existsSync(actionFilePath)) {
-      actions[actionFile] = require(actionFilePath);
+      actions[actionFile] = require(actionFilePath).fct;
     } else {
       throw `Cannot find action "${actionFile}".`;
     }

@@ -1,4 +1,11 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Checklist complete ?";
+
+exports.params = {
+  checklist_name: 'The name of the checklist (in constants.json)',
+  checklist_display_name: 'The display name of the checklist'
+}
+
+exports.fct = (card, params, tools, constants) => {
   let atLeastOneChecklistChecked = false;
   let completeChecklist = true;
   let j = 0;

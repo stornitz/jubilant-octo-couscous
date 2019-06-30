@@ -1,4 +1,11 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Due date (set, move, erase)"
+
+exports.params = {
+  set: "New value",
+  move: "Move time in ms"
+}
+
+exports.fct = (card, params, tools, constants) => {
   let newValue = null;
   if('set' in params) {
     newValue = params.set;

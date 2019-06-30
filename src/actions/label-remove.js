@@ -1,4 +1,12 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Remove label"
+
+exports.params = {
+  label_name: "Name of the label",
+  label_id: "Id of the label",
+  label_color: "Color of the label"
+}
+
+exports.fct = (card, params, tools, constants) => {
   if('label_name' in params) {
     params.label_id = constants.__labels[params.label_name];
   } else if('label_color' in params) {

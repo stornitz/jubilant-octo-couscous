@@ -1,4 +1,12 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Label"
+
+exports.params = {
+  with_name: 'Check if ',
+  set: 'Check if set (true), in the future or in the past',
+  due_complete: 'Check if due completed, or not'
+}
+
+exports.fct = (card, params, tools, constants) => {
 
   let key = null;
   let value = null;

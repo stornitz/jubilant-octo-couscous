@@ -32,8 +32,8 @@ function loadTriggers() {
     let trigger = require(triggerPath);
     let triggerName = file.split('.js')[0];
 
-    // TODO change
-    triggers[triggerName] = null;
+    delete trigger.fct;
+    triggers[triggerName] = trigger;
   });
 
   return triggers;
@@ -47,8 +47,8 @@ function loadActions() {
     let action = require(actionPath);
     let actionName = file.split('.js')[0];
 
-    // TODO change
-    actions[actionName] = null;
+    delete action.fct;
+    actions[actionName] = action;
   });
   return actions;
 }

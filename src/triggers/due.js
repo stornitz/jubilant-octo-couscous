@@ -1,4 +1,12 @@
-module.exports = (card, params, tools, constants) => {
+exports.name = "Due date"
+
+exports.params = {
+  point_of_reference: 'Date to compare to',
+  set: 'Check if set (true), in the future or in the past',
+  due_complete: 'Check if due completed, or not'
+}
+
+exports.fct = (card, params, tools, constants) => {
   let dueCorrect = false;
   
   let pointOfReference = 'point_of_reference' in params ? new Date(params.point_of_reference) : new Date();
